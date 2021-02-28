@@ -18,8 +18,8 @@ function Task(props) {
         if (props.task) {
             setLabel(props.task.title.split('|')[0]);
             setDescription(props.task.description);
-            setStartedAt(moment(props.task.start).format("YYYY-MM-DDThh:mm"));
-            setFinishedAt(moment(props.task.end).format("YYYY-MM-DDThh:mm"));
+            setStartedAt(moment(props.task.start).format("YYYY-MM-DDTHH:mm"));
+            setFinishedAt(moment(props.task.end).format("YYYY-MM-DDTHH:mm"));
         }
     }, []);
 
