@@ -6,6 +6,16 @@ Tracklogs are viewed and managed in a calendar view.
 
 For example we can track time used learning something new so that we can optimize the way we progress. We can describe what we have done in last tracklogs to help us be effective for further steps in attaining an objective. We can also analyze tracklogs to optimize the way we invest our time which is nothing but our best asset after our health.
 
+Example of a month view for category "Professionnal Current Work"
+
+![image](https://user-images.githubusercontent.com/8646786/117947475-83fa4e00-b310-11eb-854b-270ba8476aa4.png)
+
+
+Example of a week view for category "Professionnal Current Work"
+
+![image](https://user-images.githubusercontent.com/8646786/117947390-70e77e00-b310-11eb-8745-0e94167dcf4b.png)
+
+
 To start the app : npm start from the folder containing the source code. 
 
 Requirements
