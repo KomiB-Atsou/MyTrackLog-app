@@ -10,6 +10,7 @@ To start the app : npm start from the folder containing the source code.
 
 Requirements
 - Needs to have node js.
+- Needs to install MongoDB, create a database, configure a connexion from MongoDB, and adapt the db-connection.js file in the api folder (https://github.com/bi-ayefo/MyTrackLog-api)
 - Needs to start the api (npm start) available at this link https://github.com/bi-ayefo/MyTrackLog-api
 
 Configuration to use the app
