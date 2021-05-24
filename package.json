@@ -18,6 +18,7 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-select-search": "^3.0.5",
     "rodal": "^1.8.1",
     "sweetalert2": "^9.8.2"
   },

@@ -60,12 +60,14 @@ function App() {
                 let groups = _.groupBy(result.data.tasks, obj => moment(obj.start).startOf('day').format());
                 for (const [key, value] of Object.entries(groups)) {
                     f.push({
+                        _id: value._id,
+                        categoryId: value.categoryId,
                         title: `Total ${getHoursMinutesFormat(value.reduce((a, b) => a + b.duration, 0))}`,
                         start: moment(key).toDate(),
                         end: moment(key).toDate()
                     });
                 }
-
+                
                 f = f.map(x => {
                     return {
                         ...x,
@@ -92,8 +94,7 @@ function App() {
                 showTaskModal &&
                 <Task
                     task={selectedTask}
-                    selectedCategory={selectedCategory}
-                    onClose={() => {setSelectedTask(null);setShowTaskModal(false);}}
+                    onClose={() => {setSelectedTask(null); setShowTaskModal(false);}}
                     reloadTasks={reloadTasks} />
             }
             <div className="container-fluid">

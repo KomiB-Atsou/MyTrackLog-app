@@ -214,3 +214,5 @@ li {list-style: none; line-height: 1.6rem;}
 .jslists > li {margin-left: 0px;}
 .not-selected {font-size: 50px; color: #a0a0a0; margin-top: 20%;}
 .not-selected-hint {font-size: 20px; color: #a0a0a0;}
+
+.select-search {width: 100% !important;}

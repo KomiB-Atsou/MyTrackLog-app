@@ -23,6 +23,26 @@ export default class {
         return result;
     }
 
+    static getAllFlat = async keyword => {
+        let result = {
+            data: null,
+            error: null
+        };
+
+        await axios.post(`${config.api}/categories/all-flat`, {keyword: keyword})
+            .then(resp => {
+                console.log(resp);
+                if (resp.status === 200) {
+                    result.data = resp.data;
+                }
+            })
+            .catch(err => {
+                result.error = err.response.data;
+            });
+
+        return result;
+    }
+
     static add = async (label, parentCategoryId) => {
         let result = {
             data: null,

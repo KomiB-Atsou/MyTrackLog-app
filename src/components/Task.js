@@ -3,24 +3,40 @@ import moment from 'moment';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 import taskService from '../services/task';
+import categoryService from '../services/category';
 import {swalDeleteForm, swalError, swalInfo, swalSuccess} from "../utils/swal";
 import Swal from "sweetalert2";
+import SelectSearch, {fuzzySearch} from 'react-select-search';
+import 'react-select-search/style.css';
 
 function Task(props) {
 
     const currentDateTime = moment();
     const [label, setLabel] = useState('');
+    const [categoryId, setCategoryId] = useState('');
     const [description, setDescription] = useState('');
     const [startedAt, setStartedAt] = useState(currentDateTime);
     const [finishedAt, setFinishedAt] = useState(currentDateTime);
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        if (props.task) {
-            setLabel(props.task.title.split('|')[0]);
-            setDescription(props.task.description);
-            setStartedAt(moment(props.task.start).format("YYYY-MM-DDTHH:mm"));
-            setFinishedAt(moment(props.task.end).format("YYYY-MM-DDTHH:mm"));
-        }
+        categoryService.getAllFlat("")
+            .then(result => {
+                if (result.error) {
+                    swalError(result.error);
+                    return;
+                }
+
+                setCategories(result.data);
+                if (props.task) {
+                    console.log(props.task);
+                    setLabel(props.task.title.split('|')[0]);
+                    setCategoryId(props.task.categoryId);
+                    setDescription(props.task.description);
+                    setStartedAt(moment(props.task.start).format("YYYY-MM-DDTHH:mm"));
+                    setFinishedAt(moment(props.task.end).format("YYYY-MM-DDTHH:mm"));
+                }
+            });
     }, []);
 
     const handleSubmit = async e => {
@@ -38,7 +54,7 @@ function Task(props) {
                 startedAt,
                 finishedAt,
                 duration: duration,
-                categoryId: props.selectedCategory._id,
+                categoryId
             }).then(result => {
                 if (result.error) {
                     swalError(result.error);
@@ -57,7 +73,8 @@ function Task(props) {
                 description,
                 startedAt,
                 finishedAt,
-                duration: duration
+                duration: duration,
+                categoryId
             }).then(result => {
                 if (result.error) {
                     swalError(result.error);
@@ -94,6 +111,7 @@ function Task(props) {
     const clear = () => {
         setLabel('');
         setDescription('');
+        setCategoryId('');
         const currentDateTime = moment().format("YYYY-MM-DDThh:mm");
         setStartedAt(currentDateTime);
         setFinishedAt(currentDateTime);
@@ -111,12 +129,12 @@ function Task(props) {
             <div className="container-fluid text-center">
                 <form onSubmit={handleSubmit}>
                     <h4 className="m-4">{props.task && 'Update Task' || 'Create Task'}</h4>
-                    <div className="row">
-                        <div className="col text-left">
-                            <label><i>You are {props.task && 'updating' || 'adding'} this Task
-                                in <strong>{props.selectedCategory.label} </strong>category.</i></label>
-                        </div>
-                    </div>
+                    {/*<div className="row">*/}
+                    {/*    <div className="col text-left">*/}
+                    {/*        <label><i>You are {props.task && 'updating' || 'adding'} this Task*/}
+                    {/*            in <strong>{props.selectedCategory.label} </strong>category.</i></label>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div className="row">
                         <div className="col text-left">
                             <div className="form-group">
@@ -125,6 +143,24 @@ function Task(props) {
                                        placeholder="Label or Title..." required="required"
                                        id="txtLabel"
                                        value={label} onChange={e => setLabel(e.target.value)}/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col text-left">
+                            <div className="form-group">
+                                <label htmlFor="txtLabel">Category</label>
+                                <SelectSearch
+                                    value={categoryId}
+                                    onChange={setCategoryId}
+                                    emptyMessage="Not found"
+                                    placeholder="Select category"
+                                    search
+                                    filterOptions={fuzzySearch}
+                                    options={categories}
+                                    style={{width: '100%'}}
+                                />
                             </div>
                         </div>
                     </div>
